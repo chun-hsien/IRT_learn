@@ -1,0 +1,37 @@
+---
+title: "DIF_IRT_LRT"
+author: "Chun Hsien Wu"
+date: "2021年11月23日"
+output: html_document
+---
+
+####  Handbook of Educational and Psychological Measurement
+IRT LIKELIHOOD RATIO TEST FOR DIF on page 269
+```{r}
+# setup working directory
+setwd("/home/son/刻意練習/IRT/BOOK IRT/handbook_of_educational_measurement_and_psychometrics")
+library("mirt")
+library("hemp")
+
+## Notice
+VerbAgg <- VerbAggWide[, c(3, 4:27)]
+VerbAgg[, 2:25] <- apply(VerbAgg[, 2:25], 2,
+                        function(x) ifelse(x == 0, 0, 1))
+
+```
+
+```{r}
+twopl_mod <- "F = 1 - 24"
+twopl_fit <- multipleGroup(data = VerbAgg[, 2:25],
+model = twopl_mod, SE = TRUE, group = VerbAgg$Gender, verbose = FALSE)
+twopl_fit
+```
+
+```{r}
+results_irtlr <- DIF(MGmodel = twopl_fit, 
+                     which.par = c("a1", "d"), scheme = "add")
+results_irtlr
+```
+#### below, the codes won't work 
+
+
