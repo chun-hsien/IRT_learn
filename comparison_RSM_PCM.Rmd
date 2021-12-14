@@ -31,8 +31,36 @@ mod2 <- tam(hls2)
 summary(mod2)
 ```
 
-two forms of Partial Credit Model: $\theta$ is the latent trait of person $n$.
+two forms of Partial Credit Model: 
 
-$X_i$ means person $n$ get $X$ points ($x$ = 0,1, ..., $m_i$)on item i
+$\theta$ is the latent trait of person $n$.
+
+$X_i$ means person $n$ get $X$ points ($x$ = 0,1, ..., $m_i$) on item i.
 
 $P(X_{ni} = x) = \frac{exp[\sum_{k=0}^x(\theta_n-\delta_{ik})]}{\sum_{h=0}^{m_i}exp[\sum_{k=0}^h(\theta_n-\delta_{ik})]}$
+
+The second form of Partial Credit Model
+
+$P(X_{ni} = x) = \frac{exp[\sum_{k=0}^x(\theta_n-\delta_{i}+\tau_{ik})]}{\sum_{h=0}^{m_i}exp[\sum_{k=0}^h(\theta_n-\delta_{i} + \tau_{ik})]}$
+
+# Item difficulty
+```{r}
+# Deltas
+xsi <- mod2$xsi
+xsi
+```
+Here, TAM's xsi result is actually $\delta_{ik}$. This is item difficulty.
+
+Note that, $\delta_{ik}=\delta_{i}-\tau_{ik}$. In TAM'result.
+
+beta is exactly $\delta_{i}$, tau.Cat1 is $\tau_{i1}$, tau.Cat2 is $\tau_{i2}$, respectively.
+```{r}
+# Delta-tau parameters
+delta_tau <- mod2$item_irt
+delta_tau
+```
+
+```{r}
+mod2$item #PCM2 type parameteris
+```
+
