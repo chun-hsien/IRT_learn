@@ -1,0 +1,33 @@
+---
+title: "comparison of RSM and PCM"
+author: "Chun Hsien Wu"
+date: "2021年12月13日"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+2021.12.14
+learning TAM package's function about comparison of RSM and PCM
+ website https://bookdown.org/dkatz/Rasch_Biome/polytomous-items.html#polytymous-item-types-and-the-partial-credit-model
+```{r}
+library(TAM)
+setwd("/home/son/刻意練習/統計模擬_實做/Measuring_what_matters")
+
+hls2 <- read.csv("https://raw.githubusercontent.com/danielbkatz/DBER_Rasch-data/master/data/hls_poly_scale.csv")
+
+View(hls2)
+```
+ hls2's dimension is 317*16
+學習用 apply function 把資料集 各個試題答題得分的個數加總 呈現
+
+```{r}
+apply(hls2, 2, table)
+```
+the author mentioned that TAM will automatically run the PCM when our data is polytomous. (Now, I got it!)
+```{r}
+mod2 <- tam(hls2)
+summary(mod2)
+```
+
