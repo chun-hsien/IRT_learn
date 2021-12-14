@@ -31,3 +31,8 @@ mod2 <- tam(hls2)
 summary(mod2)
 ```
 
+two forms of Partial Credit Model: $\theta$ is the latent trait of person $n$.
+
+$X_i$ means person $n$ get $X$ points ($x$ = 0,1, ..., $m_i$)on item i
+
+$P(X_{ni} = x) = \frac{exp[\sum_{k=0}^x(\theta_n-\delta_{ik})]}{\sum_{h=0}^{m_i}exp[\sum_{k=0}^h(\theta_n-\delta_{ik})]}$
