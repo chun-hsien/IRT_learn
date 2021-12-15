@@ -59,7 +59,11 @@ beta is exactly $\delta_{i}$, tau.Cat1 is $\tau_{i1}$, tau.Cat2 is $\tau_{i2}$, 
 delta_tau <- mod2$item_irt
 delta_tau
 ```
+We can see that Hls1_Cat1, Hls1_Cat2 and Hls1_Cat3' value are -1.847, 2.298 and 3.83 respectively.
 
+Now, we can look at Hls1, beta equals 1.4275. It refers to item difficulty. Tau.Cat1, tau.Cat2 and tau.Cat3's value is -3.2736.5, 0.87077 and 2.402828, respectively.
+
+Then Hls1_Cat1 =-1.847 = beta + tau.Cat1 = 1.4275 + -3.273605
 ```{r}
 mod2$item #PCM2 type parameteris
 ```
