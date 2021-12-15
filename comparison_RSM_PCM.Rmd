@@ -43,6 +43,8 @@ The second form of Partial Credit Model
 
 $P(X_{ni} = x) = \frac{exp[\sum_{k=0}^x(\theta_n-\delta_{i}+\tau_{ik})]}{\sum_{h=0}^{m_i}exp[\sum_{k=0}^h(\theta_n-\delta_{i} + \tau_{ik})]}$
 
+$\delta_{i}$是整體試題難度.$\tau_{ik}$ 為試題 $i$ 在第 $j$ 閾值的難度
+
 # Item difficulty
 ```{r}
 # Deltas
