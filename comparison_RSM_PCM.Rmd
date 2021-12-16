@@ -69,4 +69,21 @@ Then Hls1_Cat1 =-1.847 = beta + tau.Cat1 = 1.4275 + -3.273605
 ```{r}
 mod2$item #PCM2 type parameteris
 ```
+# Person ability estimates
+```{r}
+WLE.ability.poly <- tam.wle(mod2)
+```
+
+```{r}
+person.ability.poly <- WLE.ability.poly$theta
+head(person.ability.poly)
+```
+
+# Item fit statistics
+```{r}
+Fit.poly <- tam.fit(mod2)
+```
+```{r}
+Fit.poly$itemfit
+```
 
