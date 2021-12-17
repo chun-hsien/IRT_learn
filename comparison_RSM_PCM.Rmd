@@ -9,6 +9,8 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 2021.12.14
+
+# Partial Credit Model
 learning TAM package's function about comparison of RSM and PCM
  website https://bookdown.org/dkatz/Rasch_Biome/polytomous-items.html#polytymous-item-types-and-the-partial-credit-model
 ```{r}
@@ -27,8 +29,8 @@ apply(hls2, 2, table)
 ```
 the author mentioned that TAM will automatically run the PCM when our data is polytomous. (Now, I got it!)
 ```{r}
-mod2 <- tam(hls2)
-summary(mod2)
+mod_pcm <- tam(hls2)
+summary(mod_pcm)
 ```
 
 two forms of Partial Credit Model: 
@@ -45,10 +47,10 @@ $P(X_{ni} = x) = \frac{exp[\sum_{k=0}^x(\theta_n-\delta_{i}+\tau_{ik})]}{\sum_{h
 
 $\delta_{i}$是整體試題難度.$\tau_{ik}$ 為試題 $i$ 在第 $j$ 閾值的難度
 
-# Item difficulty
+## PCM (Item difficulty)
 ```{r}
 # Deltas
-xsi <- mod2$xsi
+xsi <- mod_pcm$xsi
 xsi
 ```
 Here, TAM's xsi result is actually $\delta_{ik}$. This is item difficulty.
@@ -58,7 +60,7 @@ Note that, $\delta_{ik}=\delta_{i}-\tau_{ik}$. In TAM'result.
 beta is exactly $\delta_{i}$, tau.Cat1 is $\tau_{i1}$, tau.Cat2 is $\tau_{i2}$, respectively.
 ```{r}
 # Delta-tau parameters
-delta_tau <- mod2$item_irt
+delta_tau <- mod_pcm$item_irt
 delta_tau
 ```
 We can see that Hls1_Cat1, Hls1_Cat2 and Hls1_Cat3' value are -1.847, 2.298 and 3.83 respectively.
@@ -67,11 +69,11 @@ Now, we can look at Hls1, beta equals 1.4275. It refers to item difficulty. Tau.
 
 Then Hls1_Cat1 =-1.847 = beta + tau.Cat1 = 1.4275 + -3.273605
 ```{r}
-mod2$item #PCM2 type parameteris
+mod_pcm$item #PCM2 type parameteris
 ```
-# Person ability estimates
+## PCM (Person ability estimates)
 ```{r}
-WLE.ability.poly <- tam.wle(mod2)
+WLE.ability.poly <- tam.wle(mod_pcm)
 ```
 
 ```{r}
@@ -79,11 +81,38 @@ person.ability.poly <- WLE.ability.poly$theta
 head(person.ability.poly)
 ```
 
-# Item fit statistics
+## PCM (Item fit statistics)
 ```{r}
-Fit.poly <- tam.fit(mod2)
+Fit.poly <- tam.fit(mod_pcm)
 ```
 ```{r}
 Fit.poly$itemfit
+```
+## Plot and look at difficulties/thresholds
+```{r}
+# just look at a few items - items 5-8
+plot(mod_pcm, type = "items", export = F, high = 5, items = c(5:8))
+```
+## extract item steps/adjacent category 
+difficulties
+```{r}
+xsi_pcm <- mod_pcm$xsi
+head(xsi_pcm)
+```
+
+
+
+## Rating Scale Model
+```{r}
+# Run the rating scale model
+mod_rsm <- tam.mml(hls2, irtmodel = "RSM")
+```
+## Rating Scale Deltas/thresholds
+```{r}
+xsi_rsm <- mod_rsm$xsi
+xsi_rsm
+
+# PCM steps/adjacent categories
+xsi_pcm[1:10, ]
 ```
 
