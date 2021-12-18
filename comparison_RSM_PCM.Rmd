@@ -69,7 +69,7 @@ Now, we can look at Hls1, beta equals 1.4275. It refers to item difficulty. Tau.
 
 Then Hls1_Cat1 =-1.847 = beta + tau.Cat1 = 1.4275 + -3.273605
 ```{r}
-mod_pcm$item #PCM2 type parameteris
+mod_pcm$item #PCM2 type parameters
 ```
 ## PCM (Person ability estimates)
 ```{r}
@@ -102,17 +102,24 @@ head(xsi_pcm)
 
 
 
-## Rating Scale Model
+# Rating Scale Model
 ```{r}
 # Run the rating scale model
 mod_rsm <- tam.mml(hls2, irtmodel = "RSM")
 ```
-## Rating Scale Deltas/thresholds
+## Rating Scale 
 ```{r}
-xsi_rsm <- mod_rsm$xsi
-xsi_rsm
+# run the Rating Scale Model
+mod_rsm <- tam.mml(hls2, irtmodel="RSM")
+```
 
-# PCM steps/adjacent categories
-xsi_pcm[1:10, ]
+以下可以看到評定量尺模型各試題的難度,同時把部份給分模型模型二的各個試題的整體難度與評定量尺模型各個試題的難度並列加以比較
+
+```{r}
+xsi_rsm <- mod_rsm$xsi[1:16,1]
+comp_rsm_pcm_diff<-cbind(xsi_rsm, mod_pcm$item[,4])
+# add colnames name
+colnames(comp_rsm_pcm_diff) <- c("RSM", "PCM")
+comp_rsm_pcm_diff
 ```
 
