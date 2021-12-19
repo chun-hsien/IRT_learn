@@ -28,7 +28,7 @@ View(hls2)
 apply(hls2, 2, table)
 ```
 the author mentioned that TAM will automatically run the PCM when our data is polytomous. (Now, I got it!)
-```{r}
+```{r,attr.output='style="max-height: 100px;"'}
 mod_pcm <- tam(hls2)
 summary(mod_pcm)
 ```
@@ -43,26 +43,35 @@ $P(X_{ni} = x) = \frac{exp[\sum_{k=0}^x(\theta_n-\delta_{ik})]}{\sum_{h=0}^{m_i}
 
 The second form of Partial Credit Model
 
-$P(X_{ni} = x) = \frac{exp[\sum_{k=0}^x(\theta_n-\delta_{i}+\tau_{ik})]}{\sum_{h=0}^{m_i}exp[\sum_{k=0}^h(\theta_n-\delta_{i} + \tau_{ik})]}$
+$P(X_{ni} = x) = \frac{exp[\sum_{k=0}^x(\theta_n-(\delta_{i}+\tau_{ik})]}{\sum_{h=0}^{m_i}exp[\sum_{k=0}^h(\theta_n-(\delta_{i} + \tau_{ik})]}$
 
-$\delta_{i}$是整體試題難度.$\tau_{ik}$ 為試題 $i$ 在第 $j$ 閾值的難度
+$\delta_{i}$是整體試題難度
+
+$\tau_{ik}$ 為試題 $i$ 在第 $j$ 閾值的難度
 
 ## PCM (Item difficulty)
-```{r}
+
+這裡 $\delta_{ik}$ 就是 TAM報表中的 xsi
+```{r,attr.output='style="max-height: 100px;"'}
 # Deltas
 xsi <- mod_pcm$xsi
 xsi
 ```
 Here, TAM's xsi result is actually $\delta_{ik}$. This is item difficulty.
 
-Note that, $\delta_{ik}=\delta_{i}-\tau_{ik}$. In TAM'result.
+Note that, $\delta_{ik}=\delta_{i}+\tau_{ik}$. In TAM'result.
 
 beta is exactly $\delta_{i}$, tau.Cat1 is $\tau_{i1}$, tau.Cat2 is $\tau_{i2}$, respectively.
-```{r}
+
+這裡  TAM報表中的beta 就是PCM公式中的 $\delta_i$(整體試題難度)
+
+TAM報表中的 tau.cat1 就是PCM公式中的 $\tau_{i1}$ 第$i$題的第一 階梯難度(step difficulty)或稱為閾難度(threshold difficulty)
+```{r,attr.output='style="max-height: 100px;"'}
 # Delta-tau parameters
 delta_tau <- mod_pcm$item_irt
 delta_tau
 ```
+
 We can see that Hls1_Cat1, Hls1_Cat2 and Hls1_Cat3' value are -1.847, 2.298 and 3.83 respectively.
 
 Now, we can look at Hls1, beta equals 1.4275. It refers to item difficulty. Tau.Cat1, tau.Cat2 and tau.Cat3's value is -3.2736.5, 0.87077 and 2.402828, respectively.
@@ -72,7 +81,7 @@ Then Hls1_Cat1 =-1.847 = beta + tau.Cat1 = 1.4275 + -3.273605
 mod_pcm$item #PCM2 type parameters
 ```
 ## PCM (Person ability estimates)
-```{r}
+```{r,attr.output='style="max-height: 100px;"'}
 WLE.ability.poly <- tam.wle(mod_pcm)
 ```
 
@@ -99,16 +108,20 @@ difficulties
 xsi_pcm <- mod_pcm$xsi
 head(xsi_pcm)
 ```
-
-
-
-# Rating Scale Model
-```{r}
-# Run the rating scale model
-mod_rsm <- tam.mml(hls2, irtmodel = "RSM")
-```
 ## Rating Scale 
-```{r}
+評定量尺模式的公式如下
+
+$$P(X_{nij} = x) =\frac{exp[\sum_{j=0}^x(\theta_n-\delta_i-\tau_j)]}{\sum_{h=0}^{m_i}exp[\sum_{k=0}^h(\theta_n-\delta_{i} -\tau_j]}$$
+若以勝率(odds)對數公式表示則為
+$$log\frac{P_{nij}}{P_{ni(j-1)}} = \theta_n - (\delta_i + \tau_j)$$
+$\theta_n$表示受試者的能力值;
+
+$\delta_i$為第$i$題的整體難度
+
+$\tau_j$為整份測驗所有試題從得到$j-1$分到$j$分的閾值難度 或稱為階梯難度(step difficulty)
+  $P_{nij}$與 $P_{ni(j-1)}$ 表示受試者$n$在第$i$題得到$j$分和$j-1$分的機率
+
+```{r,attr.output='style="max-height: 100px;"'}
 # run the Rating Scale Model
 mod_rsm <- tam.mml(hls2, irtmodel="RSM")
 ```
@@ -122,4 +135,6 @@ comp_rsm_pcm_diff<-cbind(xsi_rsm, mod_pcm$item[,4])
 colnames(comp_rsm_pcm_diff) <- c("RSM", "PCM")
 comp_rsm_pcm_diff
 ```
+## 比較RSM與PCM中 delta-tau值
 
+## 模式比較
