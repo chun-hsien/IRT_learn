@@ -136,5 +136,33 @@ colnames(comp_rsm_pcm_diff) <- c("RSM", "PCM")
 comp_rsm_pcm_diff
 ```
 ## 比較RSM與PCM中 delta-tau值
+```{r}
+library(dplyr)
+library(tidyr)
+thresh_pcm <- as.data.frame(tam.threshold(mod_pcm))
+# transition to long data
+thresh_pcm_long <- thresh_pcm %>% mutate(item = rownames(.)) %>% pivot_longer(cols = c(Cat1, Cat2, Cat3))
+  
+head(thresh_pcm_long)
+```
 
-## 模式比較
+## 模式比較 PCM and RSM
+```{r}
+log_lik_RSM <- logLik(mod_rsm)
+
+log_lik_PCM <- logLik(mod_pcm)
+
+# Model comparisons
+anova(mod_rsm, mod_pcm)
+```
+
+```{r}
+mod_comp <- IRT.compareModels(mod_pcm, mod_rsm)
+
+mod_comp$IC
+```
+```{r}
+# Note based on deviance
+mod_comp$LRtest
+```
+

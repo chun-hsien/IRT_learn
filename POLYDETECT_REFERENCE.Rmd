@@ -1,0 +1,14 @@
+---
+title: "PolyDETECT PAPERS"
+author: "Chun Hsien Wu"
+date: "2022年2月9日"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## A Comparison of selected methods for assessing the dimensionality of polytomous items
+
+## R Markdown 2

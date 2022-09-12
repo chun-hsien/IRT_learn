@@ -1,0 +1,26 @@
+---
+title: "MLIRT_practice"
+author: "Chun Hsien Wu"
+date: '2022-09-11'
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+```{r}
+library(lme4)
+library(tidyverse)
+packageVersion("tidyverse")
+library(optimx)
+```
+example from R. J. de Ayala page 542
+```{r}
+# data file: mathunstacked.dat
+unstacked = read.table(file.choose(), col.names=c("person", paste0("i", 1:5)))
+```
+```{r}
+# reformat unstacked data into stacked format (tidyr: gather)
+tmpstacked = gather(unstacked, key= item, value=x, i1:i5)
+```
+## R Markdown
